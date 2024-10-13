@@ -1,0 +1,20 @@
+@prefix ex: <http://example.com/ns#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/tournament/2010-339> a ex:Tournament;
+  ex:conditions "Outdoor";
+  ex:date "2010.01.03"^^xsd:date;
+  ex:doublesDraw 16;
+  ex:location "Brisbane";
+  ex:name "Brisbane";
+  ex:singlesDraw 32;
+  ex:surface <http://example.com/surface/Hard>;
+  ex:type <http://example.com/type/ATP%20250> .
+
+<http://example.com/type/ATP%20250> a ex:Type .
+
+<http://example.com/type/Hard> a ex:Surface .

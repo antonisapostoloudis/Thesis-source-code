@@ -1,0 +1,90 @@
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex:    <http://example.com/ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+
+ex:PlayerShape
+    a sh:NodeShape ;
+    sh:targetClass ex:Player ; # Applies to all players
+    sh:property [              # _:b0
+        sh:path ex:birthDate ;       # constrains the values of ex:birthDate
+        sh:maxCount 1 ; 
+        sh:minCount 1;
+        sh:description "Every Player has exactly one birth date";
+    ] ;
+    sh:property [              # _:b1
+        sh:path ex:birthDate ;       # constrains the values of ex:birthDate
+        sh:datatype xsd:date ;
+        sh:pattern "^\\d{4}-\\d{2}-\\d{2}$" ;
+      
+        sh:description "The birth date should have a type of xsd:date and match the specific pattern";
+    ] ;
+    sh:property [              # _:b2
+        sh:path ex:firstName ;       # constrains the values of ex:firstName
+        sh:datatype xsd:string ;
+        sh:minCount 1;
+    ] ;
+    sh:property [              # _:b3
+        sh:path ex:lastName ;       # constrains the values of ex:lastName
+        sh:datatype xsd:string ;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:description "Every Player has exactly one last name";
+    ] ;
+    sh:property [              # _:b3
+        sh:path ex:country ;       # constrains the values of ex:lastName
+        sh:datatype xsd:string ;
+        sh:minLength 3;
+        sh:maxLength 3;
+        sh:description "Each country is displayed by 3 chars";
+    ] 
+    .
+
+ex:TournamentShape
+    a sh:NodeShape ;
+    sh:targetClass ex:Tournament; # Applies to all tournaments
+    sh:property [              # _:b4
+        sh:path ex:hasWinner ;       # constrains the values of ex:hasWinner
+        sh:nodeKind sh:IRI;
+        sh:class ex:Player;
+        sh:description "The values must be of type IRI and instances of Player";
+    ] ;
+    sh:property [              # _:b5
+        sh:path ex:type ;       # constrains the values of ex:type
+        sh:nodeKind sh:IRI;
+        sh:class ex:Type;
+        sh:description "The values must be of type IRI and instances of Type";
+    ] ;
+    sh:property [              # _:b6
+        sh:path ex:surface ;       # constrains the values of ex:surface
+        sh:nodeKind sh:IRI;
+        sh:class ex:Surface;
+        sh:description "The values must be of type IRI and instances of Surface";
+    ] ;
+    sh:property [              # _:b7
+        sh:path  ex:conditions;       # constrains the values of ex:sconditions
+        sh:datatype xsd:string;
+        sh:description "The value of conditions must be type of string";
+        
+    ] ;
+    sh:property [              # _:b8
+        sh:path ex:singlesDraw;        # constrains the values of ex:singlesDraw
+        sh:datatype xsd:integer;
+        sh:description "The value of draw must be type of integer";
+        
+    ] ;
+    sh:property [              # _:b9
+        sh:path ex:doublesDraw;        # constrains the values of ex:doublesDraw
+        sh:datatype xsd:integer;
+        sh:description "The value of draw must be type of integer";
+    ] ;
+    sh:property [              # _:b9
+        sh:path ex:name;        # constrains the values of ex:name
+        sh:datatype xsd:string;
+        sh:maxLength 25;
+        sh:description "The value of name must be type of string and has at most 25 chars";
+    ] ;
+    .
+###### add SHACL vocabulary ###### 

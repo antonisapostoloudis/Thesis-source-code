@@ -1,0 +1,160 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix ex: <http://example.com/ns#>.
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@base <http://example.com/base/> .
+
+
+
+<#TournamentMapping> a rr:TriplesMap;
+    
+    rml:logicalSource [
+        rml:source "tournaments - Copy.csv";
+        rml:referenceFormulation ql:CSV
+    ];
+    
+    rr:subjectMap [
+        rr:template "http://example.com/tournament/{ID}";
+        rr:class ex:Tournament;
+    ];
+
+    rr:predicateObjectMap [
+        rr:predicate ex:name;
+        rr:objectMap [ rml:reference "Name"];
+    ];
+
+    rr:predicateObjectMap [
+        rr:predicate ex:type;
+        rr:objectMap [   
+            rr:template "http://example.com/type/{Type}";
+            rr:class ex:Type;
+        ];
+    ];
+    
+    rr:predicateObjectMap [
+        rr:predicate ex:location;
+        rr:objectMap [ rml:reference "Location"];
+    ];
+
+    rr:predicateObjectMap [
+        rr:predicate ex:date;
+        rr:objectMap [ 
+           rml:reference "Date";
+            rr:datatype xsd:date;
+        ];
+    ];
+
+    rr:predicateObjectMap [
+        rr:predicate ex:singlesDraw;
+        rr:objectMap [ 
+            rml:reference "Singles_Draw";
+            rr:datatype xsd:integer;
+        ];
+    ];
+
+    rr:predicateObjectMap [
+        rr:predicate ex:doublesDraw;
+        rr:objectMap [ 
+            rml:reference "Doubles_Draw";
+            rr:datatype xsd:integer;
+        ];
+    ];
+
+    rr:predicateObjectMap [
+        rr:predicate ex:conditions;
+        rr:objectMap [ 
+            rml:reference "Conditions";
+        ];
+    ];
+
+    rr:predicateObjectMap [
+        rr:predicate ex:surface;
+        rr:objectMap [ 
+            rr:template "http://example.com/surface/{Surface}";
+            rr:class ex:Surface;
+        ];
+    ];
+
+    rr:predicateObjectMap [
+        rr:predicate ex:hasWinner;
+        rr:objectMap [ 
+            rr:parentTriplesMap <#WinnerMapping>;
+            rr:joinCondition [
+                rr:child "Winner_ID";
+                rr:parent "ID";
+            ];
+        ];
+    ]
+
+
+.
+
+<#TypeMapping> a rr:TriplesMap;
+    
+    rml:logicalSource [
+        rml:source "tournaments - Copy.csv";
+        rml:referenceFormulation ql:CSV
+    ];
+    
+    rr:subjectMap [
+        rr:template "http://example.com/type/{Type}";
+        rr:class ex:Type;
+    ];
+.
+
+<#SurfaceMapping> a rr:TriplesMap;
+    
+    rml:logicalSource [
+        rml:source "tournaments - Copy.csv";
+        rml:referenceFormulation ql:CSV
+    ];
+    
+    rr:subjectMap [
+        rr:template "http://example.com/type/{Surface}";
+        rr:class ex:Surface;
+    ];
+.
+
+<#WinnerMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "player_overviews_tournament_winners.csv";
+        rml:referenceFormulation ql:CSV
+    ];
+    
+    
+    rr:subjectMap [
+        rr:template "http://example.com/winner/{ID}";
+        rr:class ex:Player;
+    ];
+
+    rr:predicateObjectMap [
+        rr:predicate ex:firstName;
+        rr:objectMap [ 
+            rml:reference "FirstName"
+        ];
+    ];
+
+    rr:predicateObjectMap [
+        rr:predicate ex:lastName;
+        rr:objectMap [ 
+            rml:reference "LastName"
+        ];
+    ];
+
+    rr:predicateObjectMap [
+        rr:predicate ex:country;
+        rr:objectMap [ 
+            rml:reference "Country"
+        ];
+    ];
+
+    rr:predicateObjectMap [
+        rr:predicate ex:birthDate;
+        rr:objectMap [ 
+            rml:reference "BirthDate";
+            rr:datatype xsd:date;
+        ];
+    ]
+.
